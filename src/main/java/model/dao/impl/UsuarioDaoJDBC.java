@@ -1,11 +1,18 @@
 package model.dao.impl;
 
+import java.sql.Connection;
 import java.util.List;
 
 import model.dao.UsuarioDao;
 import models.entidade.Usuario;
 
 public class UsuarioDaoJDBC implements UsuarioDao {
+
+	private Connection conn;
+
+	public UsuarioDaoJDBC(Connection conn) {
+		this.conn = conn;
+	}
 
 	@Override
 	public void insert(Usuario obj) {
