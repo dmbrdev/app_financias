@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -38,14 +41,12 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 
 	}
 
-	
-	
 	@Override
 	public Lancamento findById(Integer id) {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			
+
 			st = conn.prepareStatement("select \n" + 
 					"	lancamento.id,\n" + 
 					"	descricao,\n" + 
@@ -57,9 +58,9 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 					"	saldo,\n" + 
 					"	id_usuario\n" + 
 					"from lancamento\n" + 
-					"inner join conta on conta.id = lancamento.id\n" + 
+					"inner join conta on conta.id = lancamento.id_conta\n" + 
 					"where lancamento.id = ?;");
-			
+
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
@@ -68,16 +69,14 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 				return lan;
 			}
 			return null;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(st);
 			DB.closeResultSet(rs);
 		}
 	}
-	
+
 	private Lancamento instantiateLancamento(ResultSet rs, Conta conta) throws SQLException {
 		Lancamento obj = new Lancamento();
 		obj.setId(rs.getInt("Id"));
@@ -95,8 +94,6 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 		conta.setSaldo(rs.getDouble("saldo"));
 		return conta;
 	}
-	
-	
 
 	@Override
 	public List<Lancamento> findAll() {
@@ -104,4 +101,51 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 		return null;
 	}
 
+	@Override
+	public List<Lancamento> findByConta(Conta conta) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("select \n" + 
+					"	lancamento.id,\n" + 
+					"	descricao,\n" + 
+					"	dt_lancamento,\n" + 
+					"	valor,\n" + 
+					"	nome,\n" + 
+					"	id_conta,\n" + 
+					"	nome,\n" + 
+					"	saldo,\n" + 
+					"	id_usuario\n" + 
+					"from lancamento\n" + 
+					"inner join conta on conta.id = lancamento.id_conta\n" + 
+					"where id_conta = ?\n" + 
+					"order by lancamento.id;");
+
+			st.setInt(1, conta.getId());
+
+			rs = st.executeQuery();
+
+			List<Lancamento> list = new ArrayList<>();
+			Map<Integer, Conta> map = new HashMap<>();
+
+			while (rs.next()) {
+
+				Conta cont = map.get(rs.getInt("id_conta"));
+
+				if (cont == null) {
+					cont = instantiateConta(rs);
+					map.put(rs.getInt("id_conta"), cont);
+				}
+
+				Lancamento obj = instantiateLancamento(rs, cont);
+				list.add(obj);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+	}
 }
