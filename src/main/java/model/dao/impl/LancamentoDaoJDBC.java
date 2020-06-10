@@ -97,8 +97,47 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 
 	@Override
 	public List<Lancamento> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("select \n" + 
+					"	lancamento.id,\n" + 
+					"	descricao,\n" + 
+					"	dt_lancamento,\n" + 
+					"	valor,\n" + 
+					"	nome,\n" + 
+					"	id_conta,\n" + 
+					"	nome,\n" + 
+					"	saldo,\n" + 
+					"	id_usuario\n" + 
+					"from lancamento\n" + 
+					"inner join conta on conta.id = lancamento.id_conta\n" + 
+					"order by lancamento.id;");
+
+			rs = st.executeQuery();
+
+			List<Lancamento> list = new ArrayList<>();
+			Map<Integer, Conta> map = new HashMap<>();
+
+			while (rs.next()) {
+
+				Conta cont = map.get(rs.getInt("id_conta"));
+
+				if (cont == null) {
+					cont = instantiateConta(rs);
+					map.put(rs.getInt("id_conta"), cont);
+				}
+
+				Lancamento obj = instantiateLancamento(rs, cont);
+				list.add(obj);
+			}
+			return list;
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override

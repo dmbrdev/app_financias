@@ -32,5 +32,15 @@ public class Applicacao {
 			System.out.println(lancamento);
 		}
 		
+		//teste busca todos
+				System.out.println("=== Lancamento ALl ===");
+				lans = new ArrayList<>();
+				
+				lans = lanDao.findAll();
+				
+				for (Lancamento lancamento : lans) {
+					System.out.println(lancamento);
+				}
+		
 	}
 }
