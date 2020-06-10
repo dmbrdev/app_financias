@@ -43,19 +43,22 @@ public class Applicacao {
 			System.out.println(lancamento);
 		}
 
-		// inserindo lancamento
-		System.out.println("=== Lancamento Insert ===");
-		Lancamento lan2 = new Lancamento(5,"Console Wi",new Date(), 420.00d, conta);
-		lanDao.insert(lan2);
-		System.out.println(lan2.getId());
-		
-		// Atualizando lancamento
-		System.out.println("=== Lancamento Update ===");
-		System.out.println("Valor antes: " + lan2.getValor());
-		lan2.setValor(1234d);
-		lanDao.update(lan2);
-		System.out.println("Valor Depois: " + lan2.getValor());
+//		// inserindo lancamento
+//		System.out.println("=== Lancamento Insert ===");
+//		Lancamento lan2 = new Lancamento(5,"Console Wi",new Date(), 420.00d, conta);
+//		lanDao.insert(lan2);
+//		System.out.println(lan2.getId());
+//		
+//		// Atualizando lancamento
+//		System.out.println("=== Lancamento Update ===");
+//		System.out.println("Valor antes: " + lan2.getValor());
+//		lan2.setValor(1234d);
+//		lanDao.update(lan2);
+//		System.out.println("Valor Depois: " + lan2.getValor());
 	
-
+		// Apagando lancamento
+		System.out.println("=== Lancamento Delete ===");
+		lanDao.deleteById(5);
+				
 	}
 }
