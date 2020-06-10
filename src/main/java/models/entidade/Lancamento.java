@@ -12,18 +12,18 @@ public class Lancamento implements Serializable{
 	private Date data;
 	private Double valor;
 	
-	private Usuario usuario;
+	private Conta conta;
 
 	public Lancamento() {
 		
 	}
 	
-	public Lancamento(Integer id, String descricao, Date data, Double valor, Usuario usuario) {
+	public Lancamento(Integer id, String descricao, Date data, Double valor, Conta conta) {
 		this.id = id;
 		this.descricao = descricao;
 		this.data = data;
 		this.valor = valor;
-		this.usuario = usuario;
+		this.conta = conta;
 	}
 
 	public Integer getId() {
@@ -58,12 +58,12 @@ public class Lancamento implements Serializable{
 		this.valor = valor;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public Conta getConta() {
+		return conta;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setConta(Conta conta) {
+		this.conta = conta;
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class Lancamento implements Serializable{
 	@Override
 	public String toString() {
 		return "Lancamento [id=" + id + ", descricao=" + descricao + ", data=" + data + ", valor=" + valor
-				+ ", usuario=" + usuario + "]";
+				+ ", conta=" + conta + "]";
 	}
 	
 }
