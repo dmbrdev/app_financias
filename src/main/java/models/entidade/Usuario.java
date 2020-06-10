@@ -9,14 +9,16 @@ public class Usuario implements Serializable{
 	private Integer id;
 	private String nome;
 	private String email;
+	private String senha;
 	
 	public Usuario() {
 	}
 	
-	public Usuario(Integer id, String nome, String email) {
+	public Usuario(Integer id, String nome, String email, String senha) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
+		this.senha = senha;
 	}
 	
 	
@@ -63,8 +65,17 @@ public class Usuario implements Serializable{
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + "]";
+		return "Usuario [email=" + email + ", id=" + id + ", nome=" + nome + ", senha=" + senha + "]";
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }
