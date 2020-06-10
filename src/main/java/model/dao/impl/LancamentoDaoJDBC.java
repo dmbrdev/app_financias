@@ -64,7 +64,45 @@ public class LancamentoDaoJDBC implements LancamentoDao {
 
 	@Override
 	public void update(Lancamento obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update lancamento set\n" + 
+					"id = ?, descricao = ?, dt_lancamento = ?, valor=?, id_conta=?\n" + 
+					"where id = ?;",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			st.setInt(1, obj.getId()); // temporário
+			st.setString(2, obj.getDescricao());
+			st.setDate(3, new java.sql.Date(obj.getData().getTime()));
+			st.setDouble(4, obj.getValor());
+			st.setInt(5, obj.getConta().getId());
+			st.setInt(6, obj.getId());
+			
+//			st.setInt(5, obj.getConta().getId());
+			
+			st.executeUpdate();
+			
+//			int rowsAffected = st.executeUpdate();
+//			
+//			if (rowsAffected > 0) {
+//				ResultSet rs = st.getGeneratedKeys();
+//				if (rs.next()) {
+//					int id = rs.getInt(1);
+//					obj.setId(id);
+//				}
+//				DB.closeResultSet(rs);
+//			}
+//			else {
+//				throw new DbException("Erro ao inserir os dados");
+//			}
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+
 
 	}
 
