@@ -1,4 +1,4 @@
-package app;
+package appteste;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,61 +8,74 @@ import model.dao.ContaDao;
 import model.dao.DaoFactory;
 import model.dao.LancamentoDao;
 import model.dao.UsuarioDao;
+import model.dao.impl.UsuarioDaoJDBC;
 import models.entidade.Conta;
 import models.entidade.Lancamento;
 import models.entidade.Usuario;
 
-public class Applicacao {
+public class ApplicacaoTeste {
 
 	public static void main(String[] args) {
 
+		UsuarioDao usuarioDao = DaoFactory.createUsuarioDao();
+		List<Usuario> lista = new ArrayList<Usuario>();
 		
-		ContaDao contaDao = DaoFactory.createContaDao();
-		// Conta conta = new Conta(1,"Poupanca", 399, null);
-		
-
-		// teste busca por ID
-		Conta lan = contaDao.findById(1);
-		System.out.println("=== Conta by id ===");
-		System.out.println(lan.toString());
-		
-		
-		
-		// teste busca por usuario
-		System.out.println("=== Conta by Usuario ===");
-		Usuario usuario = new Usuario(2,"Damiao","Damiao@gmail.com","2233");
-		List<Conta> contas = new ArrayList<>();
-		contas = contaDao.findByUsuario(usuario);
-		for (Conta conta: contas) {
-			System.out.println(conta);
-		}
-
-		
-		// teste busca todos
-		System.out.println("=== Conta ALl ===");
-		contas = new ArrayList<>();
-		contas = contaDao.findAll();
-		for (Conta conta : contas) {
-			System.out.println(conta);
+		// Buscando todos os usuario
+		lista= usuarioDao.findAll();
+		for (Usuario usuario : lista) {
+			System.out.println(usuario);
 		}
 		
-////		// inserindo conta
-//		System.out.println("=== Conta Insert ===");
-//		Conta conta2 = new Conta(15, "Investimento", 500, usuario);
-//		contaDao.insert(conta2);
-//		System.out.println(conta2.getId());
-//		
-//		
-//		// Atualizando conta
-//		System.out.println("=== Conta Update ===");
-//		System.out.println("Valor antes: " + conta2.getSaldo());
-//		conta2.setSaldo(1234d);
-//		contaDao.update(conta2);
-//		System.out.println("Valor Depois: " + conta2.getSaldo());
+		// Inserindo novo usuario
+		Usuario usuario = new Usuario(5,"Souza","souza@souza.com","22334455");
+		usuarioDao.insert(usuario);
 		
-//		// Apagando Conta
-		System.out.println("=== Conta Delete ===");
-		contaDao.deleteById(12);
+//		ContaDao contaDao = DaoFactory.createContaDao();
+//		// Conta conta = new Conta(1,"Poupanca", 399, null);
+//		
+//
+//		// teste busca por ID
+//		Conta lan = contaDao.findById(1);
+//		System.out.println("=== Conta by id ===");
+//		System.out.println(lan.toString());
+//		
+//		
+//		
+//		// teste busca por usuario
+//		System.out.println("=== Conta by Usuario ===");
+//		Usuario usuario = new Usuario(2,"Damiao","Damiao@gmail.com","2233");
+//		List<Conta> contas = new ArrayList<>();
+//		contas = contaDao.findByUsuario(usuario);
+//		for (Conta conta: contas) {
+//			System.out.println(conta);
+//		}
+//
+//		
+//		// teste busca todos
+//		System.out.println("=== Conta ALl ===");
+//		contas = new ArrayList<>();
+//		contas = contaDao.findAll();
+//		for (Conta conta : contas) {
+//			System.out.println(conta);
+//		}
+//		
+//////		// inserindo conta
+////		System.out.println("=== Conta Insert ===");
+////		Conta conta2 = new Conta(15, "Investimento", 500, usuario);
+////		contaDao.insert(conta2);
+////		System.out.println(conta2.getId());
+////		
+////		
+////		// Atualizando conta
+////		System.out.println("=== Conta Update ===");
+////		System.out.println("Valor antes: " + conta2.getSaldo());
+////		conta2.setSaldo(1234d);
+////		contaDao.update(conta2);
+////		System.out.println("Valor Depois: " + conta2.getSaldo());
+//		
+////		// Apagando Conta
+//		System.out.println("=== Conta Delete ===");
+//		contaDao.deleteById(12);
 		
 		
 		

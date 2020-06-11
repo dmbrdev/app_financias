@@ -5,4 +5,5 @@ module br.damiao.financias {
 
     opens br.damiao.financias to javafx.fxml;
     exports br.damiao.financias;
+    exports br.damiao.financias.gui;
 }
