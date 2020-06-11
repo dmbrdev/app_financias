@@ -25,7 +25,7 @@
             <TextField promptText="Email" />
             <HBox alignment="BASELINE_LEFT" spacing="10.0">
                <children>
-                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#btnLoginAction" text="Login" />
+                  <Button mnemonicParsing="false" text="Login" />
                </children>
             </HBox>
          </children>
